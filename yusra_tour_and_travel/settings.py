@@ -6,10 +6,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-7+&=q!i7g0*i0&#e)zetj7x+qop4+$^ekuj5qlyujl0al4n!4&"
 
-DEBUG = True
+DEBUG = Fasle
 
 # Specific ngrok host (recommended)
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '270d-196-188-255-165.ngrok-free.app']
+ALLOWED_HOSTS = ['127.0.0.1', '178.128.163.246','yusratourandtravel.com', '270d-196-188-255-165.ngrok-free.app']
 
 
 # Application definition
