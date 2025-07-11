@@ -1,0 +1,45 @@
+.slider-container {
+  max-width: 100%;
+  max-height: 500px;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: black;
+}
+
+.mySlides {
+  width: 80%;
+  height: 400px;
+  object-fit: fill;
+  display: block;
+  margin: auto;
+}
+
+.welcome-section {
+  background-color: black;
+  color: white;
+  border-radius: 8px;
+  margin-top: 40px;
+  padding: 64px 0;
+}
+
+.featured-packages img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.why-choose-us {
+  background-color: black;
+  color: white;
+  padding: 64px 0;
+}
+
+.testimonials img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.stats-section h2 {
+  font-size: 2rem;
+}

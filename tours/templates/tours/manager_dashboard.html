@@ -1,0 +1,59 @@
+{% extends "tours/base.html" %}
+
+{% block content %}
+<div class="container py-5">
+  <h2 class="mb-4">👨‍💼 Manager Dashboard</h2>
+  <div class="row">
+
+    <!-- Total Packages -->
+    <div class="col-md-4">
+      <div class="card text-white bg-primary mb-3">
+        <div class="card-body">
+          <h5 class="card-title">📦 Total Packages</h5>
+          <p class="card-text display-5">{{ total_packages }}</p>
+          <a href="{% url 'admin:tours_tourpackage_changelist' %}" class="btn btn-light btn-sm mt-2">Manage Packages</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customers -->
+    <div class="col-md-4">
+      <div class="card text-white bg-success mb-3">
+        <div class="card-body">
+          <h5 class="card-title">👥 Customers</h5>
+          <p class="card-text display-5">{{ total_customers }}</p>
+          <a href="{% url 'admin:tours_customer_changelist' %}" class="btn btn-light btn-sm mt-2">Manage Customers</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bookings -->
+    <div class="col-md-4">
+      <div class="card text-white bg-info mb-3">
+        <div class="card-body">
+          <h5 class="card-title">📅 Bookings</h5>
+          <p class="card-text display-5">{{ total_bookings }}</p>
+          <a href="{% url 'admin:tours_booking_changelist' %}" class="btn btn-light btn-sm mt-2">Manage Bookings</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Optional: Notifications summary -->
+  {% if notifications %}
+  <div class="mt-4">
+    <h4>🔔 Notifications</h4>
+    <ul class="list-group">
+      {% for notification in notifications %}
+      <li class="list-group-item">
+        <strong>{{ notification.title }}</strong><br>
+        <small>{{ notification.created_at|date:"M d, Y" }}</small>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

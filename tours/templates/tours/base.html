@@ -1,0 +1,326 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Yusra Tour{% endblock %}</title>
+  <meta name="description" content="Explore the world with Yusra Tour & Travel — Umrah, Health Travel, Vacation Tours, and more." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- FontAwesome (latest) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- W3.CSS -->
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css" />
+
+  <!-- Lightbox -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" defer></script>
+
+  <!-- AOS Animation CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="{% static 'tours/images/favicon.ico' %}" type="image/x-icon" />
+
+  <style>
+    :root {
+      --primary-color: #b8860b;
+      --accent-color: #8b6914;
+      --background-color: #fffbe6;
+      --text-color: #333;
+      --highlight-color: #f5e9b0;
+    }
+    body {
+      margin: 0;
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-top: 0.5em;
+    }
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+    }
+    a:hover {
+      color: white;
+      background-color: #000000;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .w3-bar-item.w3-button {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .w3-bar-item.w3-button::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      left: 0;
+      bottom: 0;
+      background-color: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+    .w3-bar-item.w3-button:hover::after {
+      width: 100%;
+    }
+    .w3-bar-item.w3-button:hover {
+      background-color: #f3f3f3;
+      color: var(--accent-color);
+    }
+    .w3-button {
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s;
+    }
+    .w3-button:hover {
+      background-color: var(--primary-color);
+      color: white;
+      transform: scale(1.03);
+    }
+    .w3-card:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3) !important;
+      transform: translateY(-4px);
+      transition: all 0.3s ease;
+    }
+    img:hover {
+      opacity: 0.9;
+      transition: opacity 0.3s ease;
+    }
+    .w3-sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 250px;
+      background-color: #fffdf0;
+      box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
+      z-index: 3;
+    }
+    .w3-bar.w3-top {
+      background-color: var(--primary-color);
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .w3-main {
+      margin-left: 250px;
+      padding: 60px 24px 40px 24px;
+      min-height: 100vh;
+      background-color: #fff;
+    }
+    footer {
+      background-color: #030301;
+      color: var(--highlight-color);
+      padding: 24px 0;
+      text-align: center;
+      font-size: 0.95rem;
+      border-top: 3px solid var(--primary-color);
+    }
+    footer a {
+      color: var(--primary-color);
+      margin: 0 8px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    footer a:hover {
+      color: white;
+      text-decoration: underline;
+    }
+    footer .w3-button {
+      transition: all 0.3s ease;
+    }
+    footer .w3-button:hover {
+      background-color: #333;
+      color: white !important;
+    }
+    #backToTop {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: none;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: background-color 0.3s ease;
+    }
+    #backToTop:hover {
+      background-color: var(--accent-color);
+    }
+    @media screen and (max-width: 992px) {
+      .w3-main {
+        margin-left: 0 !important;
+        padding-top: 60px;
+      }
+      .w3-sidebar {
+        display: none;
+        position: fixed;
+        width: 250px;
+        height: 100%;
+        z-index: 3;
+        top: 0;
+        left: 0;
+        background-color: #ffffff;
+      }
+      footer .w3-button {
+        display: block;
+        margin: 8px auto;
+      }
+      .w3-panel {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body class="w3-light-grey">
+
+  {% if messages %}
+    <div class="w3-container" style="margin: 16px;">
+      {% for message in messages %}
+        <div class="w3-panel w3-card w3-pale-yellow w3-leftbar w3-border-gold">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="w3-bar w3-top w3-black w3-large w3-hide-large">
+    <button class="w3-bar-item w3-button w3-padding-16" onclick="w3_open()" aria-label="Open Sidebar"><i class="fa fa-bars"></i></button>
+    <span class="w3-bar-item w3-padding-16">Yusra Tour & Travel</span>
+  </div>
+
+  <!-- Sidebar -->
+  <nav class="w3-sidebar w3-collapse w3-white w3-animate-left w3-card" id="mySidebar" role="navigation" aria-label="Sidebar Navigation">
+    <div class="w3-container w3-display-container w3-padding" style="background-color: black;">
+      <button class="fa fa-remove w3-hide-large w3-button w3-display-topright" onclick="w3_close()" aria-label="Close Sidebar"></button>
+      <img src="{% static 'tours/images/logo.png' %}" alt="Yusra Tour & Travel" style="max-width: 180px;" />
+    </div>
+    <div class="w3-bar-block" style="color: #c18100c5; font-weight:800;">
+      <a href="{% url 'home' %}" class="w3-bar-item w3-button nav-home {% if request.resolver_match.url_name == 'home' %}active-link{% endif %}">Home</a>
+      <a href="{% url 'umra_package_list' %}" class="w3-bar-item w3-button nav-umrah {% if request.resolver_match.url_name == 'umra_package_list' %}active-link{% endif %}">Umrah </a>
+      <a href="{% url 'health' %}" class="w3-bar-item w3-button nav-health {% if request.resolver_match.url_name == 'health' %}active-link{% endif %}">Health Travel</a>
+      <a href="{% url 'vacation' %}" class="w3-bar-item w3-button nav-vacation {% if request.resolver_match.url_name == 'vacation' %}active-link{% endif %}">Vacation Tour</a>
+      <a href="{% url 'domestic_tours' %}" class="w3-bar-item w3-button {% if request.resolver_match.url_name == 'domestic_tours' %}active-link{% endif %}">Domestic Tours</a>
+      <a href="{% url 'gallery' %}" class="w3-bar-item w3-button nav-gallery {% if request.resolver_match.url_name == 'gallery' %}active-link{% endif %}">Gallery</a>
+      <a href="{% url 'contact' %}" class="w3-bar-item w3-button nav-contact {% if request.resolver_match.url_name == 'contact' %}active-link{% endif %}">Contact </a>
+      <a href="{% url 'about' %}" class="w3-bar-item w3-button nav-about {% if request.resolver_match.url_name == 'about' %}active-link{% endif %}">About </a>
+    </div>
+  </nav>
+
+  <div class="w3-overlay w3-hide-large" onclick="w3_close()" id="myOverlay" style="cursor:pointer" aria-hidden="true"></div>
+
+  <!-- Main Content -->
+  <main class="w3-main" role="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="w3-center w3-padding-32" role="contentinfo">
+    <div class="w3-container">
+      <img src="{% static 'tours/images/logo.png' %}" alt="Yusra Tour & Travel" style="height: 60px; margin-bottom: 12px;" />
+      <p class="w3-large w3-serif">Explore the world with <strong>Yusra Tour & Travel</strong></p>
+
+      <div class="w3-margin-top w3-small">
+        <a href="{% url 'home' %}" class="w3-button w3-hover-text-white">Home</a>
+        <a href="{% url 'umra_package_list' %}" class="w3-button w3-hover-text-white">Umrah</a>
+        <a href="{% url 'health' %}" class="w3-button w3-hover-text-white">Health</a>
+        <a href="{% url 'gallery' %}" class="w3-button w3-hover-text-white">Gallery</a>
+        <a href="{% url 'vacation' %}" class="w3-button w3-hover-text-white">Vacation</a>
+        <a href="{% url 'domestic_tours' %}" class="w3-button w3-hover-text-white">Domestic </a>
+        <a href="{% url 'contact' %}" class="w3-button w3-hover-text-white">Contact</a>
+        <a href="{% url 'about' %}" class="w3-button w3-hover-text-white">About Us</a>
+        
+      </div>
+
+      <div class="w3-margin-top">
+        <a href="mailto:info@yusratourandtravel.com" style="color: var(--primary-color);">info@yusratourandtravel.com</a>
+      </div>
+
+     <div class="w3-margin-top">
+      <a href="https://tr.ee/1R1qJdLFeu" class="w3-hover-opacity w3-xlarge w3-margin-right" aria-label="Facebook" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://twitter.com" class="w3-hover-opacity w3-xlarge w3-margin-right" aria-label="Twitter" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="https://www.instagram.com/yusratourandtravel" class="w3-hover-opacity w3-xlarge w3-margin-right" aria-label="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@yusratourandtravel" class="w3-hover-opacity w3-xlarge w3-margin-right" aria-label="TikTok" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i></a>
+      <a href="https://youtube.com" class="w3-hover-opacity w3-xlarge" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+
+
+      <p class="w3-small w3-margin-top" style="color: var(--primary-color);">
+        &copy; {% now "Y" %} Yusra Tour and Travel | Powered by
+        <a href="mailto:nesredinjuneidi16@gmail.com" style="color: #f0c040;">NesruTech Team</a> | Developed by
+        <a href="https://your-portfolio-or-site.com" target="_blank" rel="noopener" style="color: #f0c040;">Nesredin Juneidi</a>
+      </p>
+    </div>
+  </footer>
+
+  <button id="backToTop" onclick="scrollToTop()" title="Back to top"><i class="fa fa-chevron-up"></i></button>
+
+  <!-- JS Scripts -->
+  <script>
+    const mySidebar = document.getElementById("mySidebar");
+    const overlayBg = document.getElementById("myOverlay");
+    const backToTopBtn = document.getElementById("backToTop");
+
+    function w3_open() {
+      mySidebar.style.display = "block";
+      overlayBg.style.display = "block";
+    }
+
+    function w3_close() {
+      mySidebar.style.display = "none";
+      overlayBg.style.display = "none";
+    }
+
+    window.onscroll = function () {
+      backToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "block" : "none";
+    };
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.querySelectorAll(".w3-sidebar .w3-bar-item").forEach(item => {
+      item.addEventListener("click", () => {
+        if (window.innerWidth <= 992) {
+          w3_close();
+        }
+      });
+    });
+  </script>
+
+  <!-- AOS Animation JS -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      AOS.init({
+        once: true,
+        duration: 800,
+        offset: 80,
+      });
+    });
+  </script>
+
+  <!-- Bootstrap Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+
+</body>
+</html>

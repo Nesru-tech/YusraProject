@@ -1,0 +1,201 @@
+{% extends "tours/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- Image Slider -->
+<div class="w3-content w3-display-container" style="max-width:100%; max-height:600px; overflow:hidden; border-radius:8px; background-color:black;">
+  {% for slide in slides %}
+    <img class="mySlides w3-animate-fading"
+         src="{{ slide.image.url }}"
+         alt="{{ slide.title }}"
+         style="width:70%; height:700px; object-fit:fill; display:block; margin:auto;">
+  {% endfor %}
+
+  <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+  <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+</div>
+
+<script>
+  let slideIndex = 1;
+  showDivs(slideIndex);
+  function plusDivs(n) {
+    showDivs(slideIndex += n);
+  }
+  function showDivs(n) {
+    const slides = document.getElementsByClassName("mySlides");
+    if (slides.length === 0) return;
+    if (n > slides.length) slideIndex = 1;
+    if (n < 1) slideIndex = slides.length;
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    slides[slideIndex - 1].style.display = "block";
+  }
+  setInterval(() => plusDivs(1), 5000);
+</script>
+
+<!-- Welcome -->
+<div class="w3-container w3-center w3-padding-64 w3-text-white" style="background:black; border-radius:8px; margin-top:40px;">
+  <h1>Welcome to Yusra Tour & Travel</h1>
+  <p class="w3-large" style="max-width:700px; margin:auto;">
+    Your gateway to unforgettable adventures, spiritual journeys, and health travel support. Explore the world with us!
+  </p>
+</div>
+
+<!-- Search Bar -->
+<div class="w3-container w3-padding-32 w3-center">
+  <h3 class="w3-text-teal">Find Your Perfect Trip</h3>
+ <form method="get" action="#search-results" style="max-width:600px; margin:auto;">
+    {% csrf_token %}
+    <input class="w3-input w3-border w3-round" type="text" name="search" placeholder="Search by country, city, or keyword" value="{{ query }}">
+    <button class="w3-button w3-teal w3-margin-top w3-round" type="submit">Search</button>
+  </form>
+</div>
+
+<!-- Search Results -->
+{% if query %}
+  <div id="search-results" class="w3-container w3-padding-32">
+    <h3 class="w3-text-teal">Search Results for "{{ query }}"</h3>
+
+    {% if results_found %}
+      {% for category in search_results %}
+        {% if category.results %}
+          <h4 class="w3-text-black w3-border-bottom w3-padding-small">{{ category.label }}</h4>
+          {% for result in category.results %}
+            <div class="w3-card-4 w3-margin-bottom w3-white">
+              <div class="w3-row">
+                <div class="w3-col m4">
+                  {% if result.image %}
+                    <img src="{{ result.image.url }}" alt="{{ result.name|default:result.title }}" style="width:100%; height:200px; object-fit:cover;">
+                  {% else %}
+                    <img src="{% static 'tours/images/default.jpg' %}" alt="Default" style="width:100%; height:200px; object-fit:cover;">
+                  {% endif %}
+                </div>
+                <div class="w3-col m8 w3-container">
+                  <h4 class="w3-text-teal" style="margin-top:10px;">
+                    <a href="{{ result.get_absolute_url }}" class="w3-hover-text-blue">
+                      {{ result.name|default:result.title }}
+                    </a>
+                  </h4>
+                  <p>{{ result.description|truncatechars:150 }}</p>
+                  <a href="{{ result.get_absolute_url }}" class="w3-button w3-teal w3-small w3-round">View Details</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <p class="w3-text-red">There is no such result!</p>
+    {% endif %}
+  </div>
+{% endif %}
+
+
+<!-- Featured Tour Packages -->
+<div class="w3-container w3-padding-64">
+  <h2 class="w3-center w3-text-teal">Featured Tour Packages</h2>
+  <div class="w3-row-padding w3-margin-top" style="max-width:1200px; margin:auto;">
+    {% for package in featured_packages %}
+      <div class="w3-third w3-margin-bottom">
+        <div class="w3-card-4 w3-hover-shadow">
+          {% if package.image %}
+            <img src="{{ package.image.url }}" alt="{{ package.title }}" style="width:100%; height:200px; object-fit:cover;">
+          {% else %}
+            <img src="{% static 'tours/images/default.jpg' %}" alt="Default Image" style="width:100%; height:200px;">
+          {% endif %}
+          <div class="w3-container w3-white w3-padding">
+            <h3>{{ package.title }}</h3>
+            <p>{{ package.description|truncatewords:15 }}</p>
+            <a href="{% url 'package_detail' package.id %}" class="w3-button w3-teal w3-round">Learn More</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Domestic Tours Section -->
+<div class="w3-container w3-padding-64" style="background:#f7fafc; border-radius:8px; max-width:1200px; margin:auto;">
+  <h2 class="w3-center w3-text-teal">Discover Our Domestic Tours</h2>
+  <p class="w3-center" style="max-width:800px; margin:auto;">Explore the hidden gems and vibrant cultures right here at home.</p>
+  <div class="w3-row-padding">
+    {% for tour in domestic_tours %}
+      <div class="w3-third w3-margin-bottom">
+        <div class="w3-card w3-white w3-hover-shadow">
+          {% if tour.image %}
+            <img src="{{ tour.image.url }}" alt="{{ tour.title }}" style="width:100%; height:180px; object-fit:cover;">
+          {% else %}
+            <img src="{% static 'tours/images/default.jpg' %}" alt="Default" style="width:100%; height:180px;">
+          {% endif %}
+          <div class="w3-container w3-padding" style="background:black; color:rgb(250, 217, 125);">
+            <h4>{{ tour.title }}</h4>
+            <p>{{ tour.description|truncatechars:100 }}</p>
+            <a href="{% url 'domestic_tours' %}" class="w3-button w3-teal w3-round">Explore</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Why Choose Us Section -->
+<div class="w3-container w3-padding-64 w3-text-white" style="background-color:black;">
+  <h2 class="w3-center">Why Choose Yusra Tour & Travel?</h2>
+  <div class="w3-row-padding w3-margin-top">
+    <div class="w3-third">
+      <h4><i class="fa fa-star w3-margin-right"></i> Trusted Service</h4>
+      <p>We provide personalized experiences and customer-first policies.</p>
+    </div>
+    <div class="w3-third">
+      <h4><i class="fa fa-plane w3-margin-right"></i> Hassle-Free Travel</h4>
+      <p>From visa processing to booking and tours — we handle it all.</p>
+    </div>
+    <div class="w3-third">
+      <h4><i class="fa fa-heart w3-margin-right"></i> Spiritual & Medical Support</h4>
+      <p>Special packages for Umrah and health tourism with full guidance.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Stats Counter -->
+<div class="w3-row-padding w3-light-grey w3-center w3-padding-64">
+  <div class="w3-quarter">
+    <h2><span class="counter" data-target="5000">0</span>+</h2>
+    <p>Happy Travelers</p>
+  </div>
+  <div class="w3-quarter">
+    <h2><span class="counter" data-target="35">0</span>+</h2>
+    <p>Destinations</p>
+  </div>
+  <div class="w3-quarter">
+    <h2><span class="counter" data-target="15">0</span>+</h2>
+    <p>Years Experience</p>
+  </div>
+  <div class="w3-quarter">
+    <h2><span class="counter" data-target="150">0</span>+</h2>
+    <p>Guided Tours</p>
+  </div>
+</div>
+
+<script>
+  const counters = document.querySelectorAll('.counter');
+  counters.forEach(counter => {
+    const updateCount = () => {
+      const target = +counter.getAttribute('data-target');
+      const count = +counter.innerText;
+      const speed = 100;
+      const increment = Math.max(1, target / speed);
+      if (count < target) {
+        counter.innerText = Math.ceil(count + increment);
+        setTimeout(updateCount, 20);
+      } else {
+        counter.innerText = target;
+      }
+    };
+    updateCount();
+  });
+</script>
+
+{% endblock %}

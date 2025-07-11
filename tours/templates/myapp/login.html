@@ -1,0 +1,37 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% trans "Login" %}</title>
+  <link rel="stylesheet" href="{% static 'css/w3.css' %}">
+  <style>
+    body.dark-mode { background-color: #222; color: #fff; }
+    .toggle { cursor: pointer; float: right; margin-right: 10px; }
+  </style>
+</head>
+<body class="w3-container">
+  <div class="w3-card-4 w3-padding w3-margin-top" style="max-width:400px;margin:auto;">
+    <h2 class="w3-center">{% trans "Login" %}</h2>
+    <span class="toggle" onclick="toggleDark()">🌙</span>
+    <form method="post">
+      {% csrf_token %}
+      <p><input class="w3-input" name="username" placeholder="{% trans 'Username' %}" required></p>
+      <p><input class="w3-input" type="password" name="password" placeholder="{% trans 'Password' %}" required></p>
+      <label><input type="checkbox" name="remember_me"> {% trans "Remember me" %}</label>
+      <button class="w3-button w3-block w3-blue w3-margin-top">{% trans "Login" %}</button>
+    </form>
+    <a href="{% url 'register' %}">{% trans "Create an account" %}</a><br>
+    {% if messages %}
+      <div class="w3-panel w3-red">
+        {% for message in messages %}<p>{{ message }}</p>{% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+  <script>
+    function toggleDark() {
+      document.body.classList.toggle('dark-mode');
+    }
+  </script>
+</body>
+</html>

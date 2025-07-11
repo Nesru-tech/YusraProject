@@ -1,0 +1,196 @@
+{% extends "tours/base.html" %}
+{% load static %}
+
+{% block title %}Domestic Tours | Yusra Tour{% endblock %}
+
+{% block content %}
+<div class="w3-container w3-padding-64" style="background-color: #f0eeeb; font-family: 'Poppins', sans-serif;">
+  <h2 class="w3-center w3-text-teal">Explore Our Domestic Tour Packages</h2>
+  <p class="w3-center">Experience the beauty of Ethiopia through our curated local tour packages.</p>
+
+  <!-- Filter Form -->
+  <form method="get" class="w3-row-padding w3-margin-top">
+    <div class="w3-half">
+      <label for="sort">Sort By:</label>
+      <select name="sort" id="sort" class="w3-select">
+        <option value="">Default</option>
+        <option value="price" {% if request.GET.sort == 'price' %}selected{% endif %}>Price (Low to High)</option>
+        <option value="-price" {% if request.GET.sort == '-price' %}selected{% endif %}>Price (High to Low)</option>
+        <option value="available_from" {% if request.GET.sort == 'available_from' %}selected{% endif %}>Date (ASC)</option>
+        <option value="-available_from" {% if request.GET.sort == '-available_from' %}selected{% endif %}>Date (DESC)</option>
+      </select>
+    </div>
+
+    <div class="w3-half">
+      <label for="q">Search:</label>
+      <input type="text" name="q" id="q" class="w3-input" placeholder="Search by title or location" value="{{ request.GET.q }}">
+    </div>
+
+    <div class="w3-padding w3-center" style="width: 100%;">
+      <button type="submit" class="w3-button w3-teal w3-margin-top">Apply Filters</button>
+    </div>
+  </form>
+
+  <!-- Domestic Package Cards -->
+  <div class="w3-row-padding w3-margin-top">
+    {% for tour in vacation_tours %}
+      <div class="w3-col s12 m6 l4 w3-margin-bottom">
+        <div class="w3-card-4 hover-effect" style="background-color: black;">
+          {% if tour.image %}
+            <img src="{{ tour.image.url }}" alt="{{ tour.title }}" loading="lazy" style="width:100%; height:200px; object-fit:cover;">
+          {% else %}
+            <img src="{% static 'tours/img/default.jpg' %}" alt="Default Image" loading="lazy" style="width:100%; height:200px; object-fit:cover;">
+          {% endif %}
+          <div class="w3-container" style="color: bisque;">
+            <h4 class="w3-text-teal"><b>{{ tour.title }}</b></h4>
+            <p><i class="fa fa-map-marker"></i> {{ tour.location }}</p>
+            <p><i class="fa fa-clock-o"></i> Duration: {{ tour.duration }}</p>
+            <p><i class="fa fa-calendar"></i> Available from: {{ tour.available_from|date:"F d, Y" }}</p>
+            <p>{{ tour.description|truncatewords:20 }}</p>
+            <p><b>Price:</b> ${{ tour.price }}</p>
+            <a href="{% url 'contact' %}" class="w3-button w3-green w3-block w3-margin-top">Book Now</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="w3-padding w3-center">No domestic tours available at the moment.</p>
+    {% endfor %}
+  </div>
+
+  <!-- Pagination -->
+  {% if vacation_tours.has_other_pages %}
+    <div class="w3-center w3-margin-top">
+      <div class="w3-bar w3-border w3-round w3-margin-top">
+        {% if vacation_tours.has_previous %}
+          <a href="?page={{ vacation_tours.previous_page_number }}&q={{ request.GET.q }}&sort={{ request.GET.sort }}" class="w3-button">&laquo;</a>
+        {% endif %}
+        {% for num in vacation_tours.paginator.page_range %}
+          {% if num >= vacation_tours.number|add:'-2' and num <= vacation_tours.number|add:'2' %}
+            <a href="?page={{ num }}&q={{ request.GET.q }}&sort={{ request.GET.sort }}" class="w3-button {% if vacation_tours.number == num %}w3-teal{% endif %}">{{ num }}</a>
+          {% endif %}
+        {% endfor %}
+        {% if vacation_tours.has_next %}
+          <a href="?page={{ vacation_tours.next_page_number }}&q={{ request.GET.q }}&sort={{ request.GET.sort }}" class="w3-button">&raquo;</a>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- About Ethiopian Tourism (Black Background + Gold + Animation) -->
+  <div class="w3-container w3-padding-64 w3-black w3-round-large w3-margin-top" id="about-ethiopia">
+    <h3 class="w3-center fade-in" style="color: gold;">Why Visit Ethiopia?</h3>
+
+    <!-- Description -->
+    <p class="w3-large w3-center fade-in-delay-1" style="max-width: 800px; margin: auto; color: gold;">
+      Ethiopia, known as the cradle of humanity, offers a unique blend of history, culture, and natural beauty.
+      From the ancient rock-hewn churches of Lalibela and the obelisks of Axum to the breathtaking Simien Mountains and the vibrant tribes of the Omo Valley,
+      Ethiopia invites travelers on an unforgettable journey through time and landscape.
+    </p>
+
+    <!-- Highlights List -->
+    <div class="w3-content w3-padding-16 fade-in-delay-2" style="max-width: 800px;">
+      <ul class="w3-ul w3-card-4 w3-dark-grey" style="color: gold;">
+        <li><i class="fa fa-check w3-text-green"></i> 11 UNESCO World Heritage Sites</li>
+        <li><i class="fa fa-check w3-text-green"></i> Diverse cultures and over 80 languages</li>
+        <li><i class="fa fa-check w3-text-green"></i> Incredible landscapes: Danakil Depression, Bale Mountains</li>
+        <li><i class="fa fa-check w3-text-green"></i> Coffee origin and rich culinary heritage</li>
+      </ul>
+    </div>
+
+    <!-- Image Gallery -->
+    <div class="w3-row-padding w3-margin-top w3-center fade-in-delay-3">
+      <div class="w3-col m4 w3-margin-bottom">
+        <img src="{% static 'tours/images/slide4.jpg' %}" alt="Lalibela" style="width:100%; height:200px; object-fit:cover;" class="w3-round-large" loading="lazy">
+        <p style="color: gold;">Lalibela Rock Churches</p>
+      </div>
+      <div class="w3-col m4 w3-margin-bottom">
+        <img src="{% static 'tours/images/dom3.jpg' %}" alt="Simien Mountains" style="width:100%; height:200px; object-fit:cover;" class="w3-round-large" loading="lazy">
+        <p style="color: gold;">Simien Mountains National Park</p>
+      </div>
+      <div class="w3-col m4 w3-margin-bottom">
+        <img src="{% static 'tours/images/slide7.jpg' %}" alt="Omo Valley" style="width:100%; height:200px; object-fit:cover;" class="w3-round-large" loading="lazy">
+        <p style="color: gold;">Omo Valley Tribes</p>
+      </div>
+    </div>
+
+    <!-- CTA Button with Glow & Pulse -->
+    <div class="w3-center w3-margin-top fade-in-delay-4">
+      <a href="{% url 'about' %}" class="w3-button glow-button">
+        Learn More About Ethiopia
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Animations and Effects CSS -->
+<style>
+  /* Fade-in animations */
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+  }
+  .fade-in-delay-1 {
+    opacity: 0;
+    animation: fadeIn 1.2s ease-in-out forwards 0.3s;
+  }
+  .fade-in-delay-2 {
+    opacity: 0;
+    animation: fadeIn 1.4s ease-in-out forwards 0.6s;
+  }
+  .fade-in-delay-3 {
+    opacity: 0;
+    animation: fadeIn 1.6s ease-in-out forwards 0.9s;
+  }
+  .fade-in-delay-4 {
+    opacity: 0;
+    animation: fadeIn 1.8s ease-in-out forwards 1.2s;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Glowing + pulsing button */
+  .glow-button {
+    background-color: gold;
+    color: black;
+    font-weight: bold;
+    padding: 12px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    animation: pulse 2s infinite;
+    box-shadow: 0 0 5px gold, 0 0 15px gold, 0 0 25px gold;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .glow-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 0 30px #ffd700;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 5px gold; }
+    50% { box-shadow: 0 0 20px gold; }
+    100% { box-shadow: 0 0 5px gold; }
+  }
+
+  /* Hover Effect CSS for Cards */
+  .hover-effect {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .hover-effect:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 18px rgba(255, 215, 0, 0.3);
+  }
+
+  /* Style for select and input */
+  select, input[type="text"] {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px;
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends "tours/base.html" %}
+{% load static %}
+
+{% block title %}Health Travel | Yusra Tour{% endblock %}
+
+{% block content %}
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- External CSS & AOS -->
+<link rel="stylesheet" href="{% static 'css/health.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+<style>
+  body {
+    font-family: 'Raleway', sans-serif;
+    line-height: 1.6;
+  }
+  .text-gold {
+    color: #d4af37;
+  }
+  .bg-gold {
+    background-color: #d4af37 !important;
+  }
+  .text-light {
+    color: #f1f1f1;
+  }
+  .responsive-img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  ul.w3-ul li {
+    padding: 10px 0;
+    font-size: 1rem;
+  }
+  .service-detail {
+    padding-left: 25px;
+    font-size: 0.95rem;
+  }
+</style>
+
+<!-- Health Travel Services -->
+<div class="w3-container w3-padding-32" data-aos="fade-up">
+  <h2 class="text-gold">Health Travel Services</h2>
+  <p class="w3-large text-light">
+    We provide full support for international medical travel, including hospital appointments, translation services, and complete logistics planning.
+  </p>
+
+  <div class="w3-row-padding w3-margin-top">
+    <div class="w3-col s12 m12 l6" data-aos="fade-right">
+      <ul class="w3-ul w3-card w3-hover-shadow">
+        <li><i class="fa fa-hospital-o text-gold"></i> Hospital Booking Support
+          <div class="service-detail">We help book appointments at top international hospitals tailored to your needs.</div>
+        </li>
+        <li><i class="fa fa-file-text text-gold"></i> Visa, Ticket & Documentation Help
+          <div class="service-detail">We assist with visas, air tickets, and medical documentation for your treatment abroad.</div>
+        </li>
+        <li><i class="fa fa-plane text-gold"></i> Travel & Accommodation
+          <div class="service-detail">We’ll book convenient flights and stays close to your hospital.</div>
+        </li>
+        <li><i class="fa fa-language text-gold"></i> Medical Interpreter Assistance
+          <div class="service-detail">Professional interpreters accompany you throughout your care.</div>
+        </li>
+        <li><i class="fa fa-comments text-gold"></i> Full Concierge Support
+          <div class="service-detail">We handle everything from start to finish based on your health needs.</div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="w3-col s12 m12 l6 w3-padding" data-aos="fade-left">
+      <img src="{% static 'tours/images/health_new1.jpg' %}" alt="Medical Travel" class="responsive-img" loading="lazy">
+    </div>
+  </div>
+</div>
+
+<!-- Featured Health Tourism Services -->
+<div class="w3-container w3-padding-32 w3-black w3-round-large" data-aos="zoom-in-up">
+  <h3 class="text-gold">Featured Health Tourism Services</h3>
+  <div class="w3-row-padding w3-margin-top">
+    <div class="w3-col s12 m6" data-aos="fade-right">
+      <ul class="w3-ul w3-card w3-hover-shadow">
+        <li><i class="fa fa-heartbeat text-gold"></i> General Health Checkup
+          <div class="service-detail">Includes blood tests, physical exams, and screenings.</div>
+        </li>
+        <li><i class="fa fa-smile-o text-gold"></i> Dental & Cosmetic Dentistry
+          <div class="service-detail">Veneers, implants, and whitening using advanced tools.</div>
+        </li>
+      </ul>
+    </div>
+    <div class="w3-col s12 m6" data-aos="fade-left">
+      <ul class="w3-ul w3-card w3-hover-shadow">
+        <li><i class="fa fa-medkit text-gold"></i> Cancer Diagnosis & Treatment
+          <div class="service-detail">Modern oncology care with ongoing support.</div>
+        </li>
+        <li><i class="fa fa-ambulance text-gold"></i> Organ Transplant Coordination
+          <div class="service-detail">From donor matching to full aftercare support.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Why Turkey Section -->
+<div class="w3-container w3-padding-32" data-aos="fade-up">
+  <h3 class="text-gold">Why Choose Turkey for Health Tourism?</h3>
+  <div class="w3-row-padding w3-margin-top">
+    <div class="w3-col s12 l6" data-aos="fade-right">
+      <p class="w3-large text-light">
+        Turkey offers top-tier medical care at affordable prices, with accredited hospitals and expert doctors ready to help.
+      </p>
+      <ul class="w3-ul w3-card w3-hover-shadow">
+        <li><i class="fa fa-user-md text-gold"></i> World-class doctors & hospitals</li>
+        <li><i class="fa fa-medkit text-gold"></i> Cancer, transplant & dental care</li>
+        <li><i class="fa fa-money text-gold"></i> Affordable packages</li>
+        <li><i class="fa fa-globe text-gold"></i> Multilingual support</li>
+        <li><i class="fa fa-plane text-gold"></i> Easy travel & visa process</li>
+      </ul>
+    </div>
+
+    <div class="w3-col s12 l6 w3-padding" data-aos="fade-left">
+      <img src="{% static 'tours/images/health_new2.jpg' %}" alt="Health in Turkey" class="responsive-img" loading="lazy">
+    </div>
+  </div>
+
+  <div class="w3-padding-16" data-aos="zoom-in-up">
+    <h4 class="text-gold">Top Health Cities in Turkey</h4>
+    <ul class="w3-ul w3-card w3-hover-shadow">
+      <li><strong>Istanbul</strong> – Cardiology, oncology, plastic surgery</li>
+      <li><strong>Ankara</strong> – Transplants & diagnostics</li>
+      <li><strong>Antalya</strong> – Dental care, eye surgery, wellness retreats</li>
+    </ul>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="w3-center w3-margin-top w3-padding-32" data-aos="zoom-in">
+  <a href="{% url 'contact' %}" class="w3-button bg-gold w3-large w3-round-xlarge w3-hover-shadow text-black">
+    Request a Health Travel Quote
+  </a>
+</div>
+
+<script>
+  AOS.init({ duration: 1000, once: true });
+</script>
+{% endblock %}

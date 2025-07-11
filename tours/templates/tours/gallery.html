@@ -1,0 +1,77 @@
+{% extends "tours/base.html" %}
+{% load static %}
+
+{% block title %}Gallery | Yusra Tour{% endblock %}
+
+{% block content %}
+<!-- Lightbox Assets -->
+<link rel="stylesheet" href="{% static 'css/lightbox.min.css' %}">
+<script src="{% static 'js/lightbox.min.js' %}"></script>
+
+<div class="container py-5">
+  <!-- Page Header -->
+  <h2 class="text-center mb-4 text-gold" style="font-family: 'Playfair Display', serif;">
+    Our Photo Gallery
+  </h2>
+  <p class="text-center text-white mb-5">
+    Moments captured from our unforgettable tours and experiences.
+  </p>
+
+  <!-- Gallery Grid -->
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    {% for image in images %}
+      <div class="col">
+        <div class="card h-100 border-gold bg-black text-white shadow-sm hover-glow">
+          <a href="{{ image.image.url }}" data-lightbox="gallery" data-title="{{ image.title }}">
+            <img 
+              src="{{ image.image.url }}" 
+              alt="{{ image.title }}" 
+              class="card-img-top img-fluid"
+              loading="lazy"
+              style="height: 220px; object-fit: cover; transition: transform 0.3s;"
+              onmouseover="this.style.transform='scale(1.03)'" 
+              onmouseout="this.style.transform='scale(1)'"
+            >
+          </a>
+          <div class="card-body">
+            <h5 class="card-title text-gold">{{ image.title }}</h5>
+            <p class="card-text small">{{ image.description|truncatechars:80 }}</p>
+          </div>
+          <div class="card-footer bg-dark text-muted small">
+            <i class="fa fa-calendar-alt"></i> {{ image.upload_date|date:"M d, Y" }}
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <p class="text-center text-light">No images found in the gallery.</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Optional Pagination -->
+  <div class="mt-4 d-flex justify-content-center">
+    {% if is_paginated %}
+      <nav>
+        <ul class="pagination pagination-sm">
+          {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link bg-dark text-white" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+            </li>
+          {% endif %}
+          {% for num in paginator.page_range %}
+            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+              <a class="page-link bg-dark text-white" href="?page={{ num }}">{{ num }}</a>
+            </li>
+          {% endfor %}
+          {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link bg-dark text-white" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

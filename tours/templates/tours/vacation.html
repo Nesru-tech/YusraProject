@@ -1,0 +1,181 @@
+{% extends "tours/base.html" %}
+{% load static %}
+
+{% block title %}Vacation Tours | Yusra Tour{% endblock %}
+
+{% block content %}
+<div class="w3-container w3-padding-64" style="background-color: #f0eeeb; font-family: 'Poppins', sans-serif;">
+  <h2 class="w3-center w3-text-teal">Explore Our Vacation Tour Packages</h2>
+  <p class="w3-center">Discover amazing destinations tailored for unforgettable experiences.</p>
+
+  <!-- Filter Form -->
+  <form method="get" class="w3-row-padding w3-margin-top">
+    <div class="w3-third">
+      <label for="country">Filter by Country:</label>
+      <select name="country" id="country" class="w3-select">
+        <option value="">All Countries</option>
+        {% for country in countries %}
+          <option value="{{ country }}" {% if request.GET.country == country %}selected{% endif %}>{{ country }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="w3-third">
+      <label for="sort">Sort By:</label>
+      <select name="sort" id="sort" class="w3-select">
+        <option value="">Default</option>
+        <option value="price" {% if request.GET.sort == 'price' %}selected{% endif %}>Price (Low to High)</option>
+        <option value="-price" {% if request.GET.sort == '-price' %}selected{% endif %}>Price (High to Low)</option>
+        <option value="available_from" {% if request.GET.sort == 'available_from' %}selected{% endif %}>Date (ASC)</option>
+        <option value="-available_from" {% if request.GET.sort == '-available_from' %}selected{% endif %}>Date (DESC)</option>
+      </select>
+    </div>
+
+    <div class="w3-third">
+      <label for="q">Search:</label>
+      <input type="text" name="q" id="q" class="w3-input" placeholder="Search title or location" value="{{ request.GET.q }}">
+    </div>
+
+    <div class="w3-padding w3-center" style="width: 100%;">
+      <button type="submit" class="w3-button w3-teal w3-margin-top">Apply Filters</button>
+    </div>
+  </form>
+
+  <!-- Vacation Package Cards -->
+  <div class="w3-row-padding w3-margin-top">
+    {% for tour in vacation_tours %}
+      <div class="w3-col s12 m6 l4 w3-margin-bottom">
+        <div class="w3-card-4 hover-effect" style="background-color: black;">
+          {% if tour.image %}
+            <img src="{{ tour.image.url }}" alt="{{ tour.title }}" style="width:100%; height:200px; object-fit:cover;">
+          {% else %}
+            <img src="{% static 'tours/img/default.jpg' %}" alt="Default Image" style="width:100%; height:200px; object-fit:cover;">
+          {% endif %}
+          <div class="w3-container" style="color: bisque;">
+            <h4 class="w3-text-teal"><b>{{ tour.title }}</b></h4>
+            <p><i class="fa fa-map-marker"></i> {{ tour.location }}, {{ tour.country }}</p>
+            <p><i class="fa fa-clock-o"></i> Duration: {{ tour.duration }}</p>
+            <p><i class="fa fa-calendar"></i> Available from: {{ tour.available_from|date:"F d, Y" }}</p>
+            <p>{{ tour.description|truncatewords:20 }}</p>
+            <p><b>Price:</b> ${{ tour.price }}</p>
+            <a href="{% url 'contact' %}" class="w3-button w3-green w3-block w3-margin-top">Book Now</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="w3-padding w3-center">No vacation tours available at the moment.</p>
+    {% endfor %}
+  </div>
+
+  <!-- About Vacation Tours Around the World (Black Background + Gold + Animation) -->
+  <div class="w3-container w3-padding-64 w3-black w3-round-large w3-margin-top" id="about-vacation-world">
+    <h3 class="w3-center fade-in" style="color: gold;">Discover Vacation Destinations Around the World</h3>
+
+    <p class="w3-large w3-center fade-in-delay-1" style="max-width: 900px; margin: auto; color: gold;">
+      Traveling opens the door to new cultures, breathtaking landscapes, and unforgettable memories.
+      From the pristine beaches of the Maldives and the historic cities of Europe to the exotic wildlife safaris in Africa and the vibrant festivals in South America,
+      our curated vacation tours offer something for every traveler’s dream.
+    </p>
+
+    <div class="w3-content w3-padding-16 fade-in-delay-2" style="max-width: 900px;">
+      <ul class="w3-ul w3-card-4 w3-dark-grey" style="color: gold;">
+        <li><i class="fa fa-globe w3-text-green"></i> Explore diverse cultures and cuisines worldwide</li>
+        <li><i class="fa fa-map w3-text-green"></i> Visit iconic landmarks like the Eiffel Tower, Machu Picchu, and the Great Wall of China</li>
+        <li><i class="fa fa-camera w3-text-green"></i> Capture stunning natural wonders: Grand Canyon, Great Barrier Reef, Northern Lights</li>
+        <li><i class="fa fa-plane w3-text-green"></i> Convenient packages with flights, accommodation, and guided tours</li>
+      </ul>
+    </div>
+
+    <!-- Call To Action Button -->
+    <div class="w3-center w3-margin-top fade-in-delay-3">
+      <a href="{% url 'contact' %}" class="w3-button glow-button">
+        Plan Your Global Adventure Now
+      </a>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  {% if vacation_tours.has_other_pages %}
+    <div class="w3-center w3-margin-top">
+      <div class="w3-bar w3-border w3-round w3-margin-top">
+        {% if vacation_tours.has_previous %}
+          <a href="?page={{ vacation_tours.previous_page_number }}&country={{ request.GET.country }}&q={{ request.GET.q }}&sort={{ request.GET.sort }}" class="w3-button">&laquo;</a>
+        {% endif %}
+        {% for num in vacation_tours.paginator.page_range %}
+          {% if num >= vacation_tours.number|add:'-2' and num <= vacation_tours.number|add:'2' %}
+            <a href="?page={{ num }}&country={{ request.GET.country }}&q={{ request.GET.q }}&sort={{ request.GET.sort }}" class="w3-button {% if vacation_tours.number == num %}w3-teal{% endif %}">{{ num }}</a>
+          {% endif %}
+        {% endfor %}
+        {% if vacation_tours.has_next %}
+          <a href="?page={{ vacation_tours.next_page_number }}&country={{ request.GET.country }}&q={{ request.GET.q }}&sort={{ request.GET.sort }}" class="w3-button">&raquo;</a>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+<!-- Hover Effect CSS -->
+<style>
+  .hover-effect {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .hover-effect:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 18px rgba(255, 215, 0, 0.3);
+  }
+  select, input[type="text"] {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px;
+  }
+
+  /* Fade-in animations */
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+  }
+  .fade-in-delay-1 {
+    opacity: 0;
+    animation: fadeIn 1.2s ease-in-out forwards 0.3s;
+  }
+  .fade-in-delay-2 {
+    opacity: 0;
+    animation: fadeIn 1.4s ease-in-out forwards 0.6s;
+  }
+  .fade-in-delay-3 {
+    opacity: 0;
+    animation: fadeIn 1.6s ease-in-out forwards 0.9s;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Glowing + pulsing button */
+  .glow-button {
+    background-color: gold;
+    color: black;
+    font-weight: bold;
+    padding: 12px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    animation: pulse 2s infinite;
+    box-shadow: 0 0 5px gold, 0 0 15px gold, 0 0 25px gold;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .glow-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 0 30px #ffd700;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 5px gold; }
+    50% { box-shadow: 0 0 20px gold; }
+    100% { box-shadow: 0 0 5px gold; }
+  }
+</style>
+
+{% endblock %}

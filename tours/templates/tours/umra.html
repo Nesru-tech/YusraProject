@@ -1,0 +1,179 @@
+{% extends "tours/base.html" %}
+{% load static %}
+
+{% block title %}Umrah Travel Packages{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  <h2 class="w3-text-teal fade-in">Umrah Travel Packages</h2>
+  <p class="fade-in delay-1">We offer spiritual and comfortable Umrah travel experiences tailored for Ethiopian and global pilgrims.</p>
+
+  <!-- Filter Form -->
+  <form method="get" class="w3-row-padding w3-margin-top fade-in delay-2" id="filterForm">
+    <div class="w3-col s12 m6 l4 w3-margin-bottom">
+      <label for="country">Filter by Country:</label>
+      <select name="country" id="country" class="w3-select animated-placeholder">
+        <option value="">All</option>
+        {% for c in all_countries %}
+          <option value="{{ c }}" {% if c == selected_country %}selected{% endif %}>{{ c }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="w3-col s12 m6 l4 w3-margin-bottom">
+      <label for="date">From Date:</label>
+      <input type="date" name="date" id="date" class="w3-input animated-placeholder" value="{{ selected_date }}">
+    </div>
+    <div class="w3-col s12 m6 l4 w3-margin-bottom">
+      <label for="sort">Sort by:</label>
+      <select name="sort" id="sort" class="w3-select animated-placeholder">
+        <option value="">Default</option>
+        <option value="price_asc" {% if selected_sort == "price_asc" %}selected{% endif %}>Price Low to High</option>
+        <option value="price_desc" {% if selected_sort == "price_desc" %}selected{% endif %}>Price High to Low</option>
+        <option value="date_asc" {% if selected_sort == "date_asc" %}selected{% endif %}>Date Ascending</option>
+        <option value="date_desc" {% if selected_sort == "date_desc" %}selected{% endif %}>Date Descending</option>
+      </select>
+    </div>
+    <div class="w3-col s12">
+      <button type="submit" class="w3-button w3-teal w3-margin-top w3-block">Apply Filters</button>
+    </div>
+  </form>
+
+  <!-- Packages Grid -->
+  <div class="w3-row-padding w3-margin-top" style="color: rgb(252, 235, 140);">
+    {% for package in umra_packages %}
+      <div class="w3-col s12 m6 l4 w3-margin-bottom package-card">
+        <div class="w3-card-4 hover-effect" style="background-color: black;">
+          {% if package.image %}
+            <img src="{{ package.image.url }}" alt="{{ package.name }}" style="width:100%; height:200px; object-fit:cover;">
+          {% else %}
+            <img src="{% static 'tours/img/default.jpg' %}" alt="Default Image" style="width:100%; height:200px; object-fit:cover;">
+          {% endif %}
+          <div class="w3-container">
+            <h4 class="w3-text-teal"><b>{{ package.name }}</b></h4>
+            <p><i class="fa fa-map-marker"></i> {{ package.location }}, {{ package.country }}</p>
+            <p><i class="fa fa-clock-o"></i> Duration: {{ package.duration }}</p>
+            <p><i class="fa fa-calendar"></i> Available from: {{ package.available_from }}</p>
+            <p>{{ package.description|truncatewords:20 }}</p>
+            <p><b>Price:</b> ${{ package.price }}</p>
+            <a href="{% url 'contact' %}" class="w3-button w3-green w3-block w3-margin-top">Book Now</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="w3-padding">No Umrah packages available at the moment.</p>
+    {% endfor %}
+  </div>
+
+  <!-- General Info -->
+  <div class="w3-panel w3-light-grey w3-padding w3-round-large w3-margin-top fade-in delay-3">
+    <h4 class="w3-text-teal">What Our Umrah Packages Include:</h4>
+    <ul class="w3-ul w3-small">
+      <li>✈️ Round-trip airfare from Addis Ababa or other major cities</li>
+      <li>🏨 Accommodation in 3 to 5-star hotels near Haram in Makkah and Madinah</li>
+      <li>🚌 Airport and inter-city transportation in Saudi Arabia</li>
+      <li>🍽️ Daily meals or breakfast options depending on the package</li>
+      <li>📜 Umrah visa processing and travel insurance</li>
+      <li>🕋 Guided religious support and group coordination</li>
+    </ul>
+    <p class="w3-small">Note: Prices and durations may vary based on your chosen date and departure city. Please contact us for customized packages or group bookings.</p>
+  </div>
+</div>
+
+<style>
+  /* Fade-in animations with delay */
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+  }
+  .delay-1 {
+    animation-delay: 0.3s;
+  }
+  .delay-2 {
+    animation-delay: 0.6s;
+  }
+  .delay-3 {
+    animation-delay: 0.9s;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Hover effect with smoother animation */
+  .hover-effect {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
+  }
+  .hover-effect:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(33, 32, 32, 0.3);
+  }
+
+  /* Animated placeholder for selects and inputs */
+  .animated-placeholder::placeholder {
+    color: #999;
+    opacity: 1;
+    animation: placeholderPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes placeholderPulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  /* Package cards initial state for scroll animation */
+  .package-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .package-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Responsive tweaks */
+  @media screen and (max-width: 600px) {
+    .w3-col {
+      width: 100% !important;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .w3-button {
+      font-size: 16px;
+    }
+
+    .w3-container h2 {
+      font-size: 22px;
+    }
+  }
+</style>
+
+<script>
+  // Animate package cards when they scroll into view
+  document.addEventListener("DOMContentLoaded", function() {
+    const packages = document.querySelectorAll('.package-card');
+
+    function checkVisibility() {
+      const triggerBottom = window.innerHeight * 0.9;
+      packages.forEach(pkg => {
+        const boxTop = pkg.getBoundingClientRect().top;
+        if (boxTop < triggerBottom) {
+          pkg.classList.add('visible');
+        }
+      });
+    }
+
+    checkVisibility();
+    window.addEventListener('scroll', checkVisibility);
+  });
+</script>
+
+{% endblock %}

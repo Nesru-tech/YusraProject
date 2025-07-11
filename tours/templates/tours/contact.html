@@ -1,0 +1,260 @@
+{% extends "tours/base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- External Contact Page CSS -->
+<link rel="stylesheet" href="{% static 'tours/css/contact.css' %}">
+
+<div class="w3-container contact-section fade-in">
+
+  {% if messages %}
+  <div class="w3-panel w3-pale-green w3-border w3-border-green w3-round w3-margin-bottom">
+    {% for message in messages %}
+      <p>{{ message }}</p>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <h2 class="contact-title w3-center">Contact Us</h2>
+  <p class="w3-center">Feel free to reach out via email, phone, or visit us in person.</p>
+
+  <div class="w3-row-padding w3-margin-top">
+    <!-- Contact Info -->
+    <div class="w3-col m5 l4 w3-padding contact-info">
+      <p><i class="fa fa-envelope"></i> <strong>Email:</strong> yusratourandtravel@gmail.com</p>
+      <p><i class="fa fa-phone"></i> <strong>Phone:</strong> +251 988354958 / +251 972055202</p>
+      <p><i class="fa fa-map-marker"></i>
+        <strong>Address:</strong>
+        <a href="https://www.google.com/maps/place/Tropical+Mall,+Bole,+Addis+Ababa,+Ethiopia"
+           target="_blank" class="w3-text-black underline-link">
+           Bole Japan Tropical Mall, Ground Floor No.G 13A, Addis Ababa, Ethiopia
+        </a>
+      </p>
+
+      <h4>Follow us</h4>
+      <p class="social-icons">
+        <a href="https://tr.ee/1R1qJdLFeu" class="fab fa-facebook-f social-icon" title="Facebook" target="_blank" rel="noopener"></a>
+        <a href="https://www.tiktok.com/@yusratourandtravel" class="fab fa-tiktok social-icon" title="TikTok" target="_blank" rel="noopener"></a>
+        <a href="https://www.instagram.com/yusratourandtravel" class="fab fa-instagram social-icon" title="Instagram" target="_blank" rel="noopener"></a>
+      </p>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="w3-col m7 l8 w3-padding">
+      <form action="{% url 'contact' %}" method="post" class="w3-container w3-card-4 w3-padding contact-form" novalidate>
+        {% csrf_token %}
+        
+        <div class="input-group">
+          <input id="name" class="w3-input w3-round" type="text" name="name" required placeholder=" ">
+          <label for="name">Name</label>
+          <span class="input-error"></span>
+        </div>
+
+        <div class="input-group">
+          <input id="email" class="w3-input w3-round" type="email" name="email" required placeholder=" ">
+          <label for="email">Email</label>
+          <span class="input-error"></span>
+        </div>
+
+        <div class="input-group">
+          <input id="phone_number" class="w3-input w3-round" type="text" name="phone_number" required pattern="^\+?\d{7,15}$" title="Enter a valid phone number" placeholder=" ">
+          <label for="phone_number">Phone Number</label>
+          <span class="input-error"></span>
+        </div>
+
+        <div class="input-group">
+          <input id="subject" class="w3-input w3-round" type="text" name="subject" required placeholder=" ">
+          <label for="subject">Subject</label>
+          <span class="input-error"></span>
+        </div>
+
+        <div class="input-group">
+          <textarea id="message" class="w3-input w3-round" name="message" rows="5" required placeholder=" "></textarea>
+          <label for="message">Message</label>
+          <span class="input-error"></span>
+        </div>
+
+        <button type="submit" class="w3-button w3-round w3-margin-top submit-button">Send Message</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Google Map Embed -->
+  <div class="w3-container w3-padding map-container" style="margin-top:40px;">
+    <h3 class="contact-title">Our Location</h3>
+    <div style="width: 100%; height: 350px;" class="map-embed">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.7901710582564!2d38.780816275902104!3d8.991446289573766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85f52615ebdf%3A0x6a0949274cd951c7!2sTropical%20Mall!5e0!3m2!1sen!2set!4v1750456956333!5m2!1sen!2set"
+        width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* General font & background */
+  .contact-section {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f8fafc, #e0f0ff);
+    color: #333;
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(33, 150, 243, 0.15);
+  }
+
+  /* Fade in whole contact section */
+  .fade-in {
+    opacity: 0;
+    animation: fadeInEase 1s forwards;
+  }
+  @keyframes fadeInEase {
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Input group floating label */
+  .input-group {
+    position: relative;
+    margin-top: 25px;
+  }
+  .input-group input,
+  .input-group textarea {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    background: #fff;
+    border: 1.8px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: inherit;
+  }
+  .input-group input:focus,
+  .input-group textarea:focus {
+    border-color: #2196F3;
+    box-shadow: 0 0 6px #2196F3aa;
+  }
+  .input-group label {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    color: #777;
+    font-size: 16px;
+    pointer-events: none;
+    transition: 0.3s ease all;
+    background-color: #f8fafc;
+    padding: 0 6px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .input-group input:focus + label,
+  .input-group input:not(:placeholder-shown) + label,
+  .input-group textarea:focus + label,
+  .input-group textarea:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 12px;
+    font-size: 13px;
+    color: #2196F3;
+  }
+
+  /* Error message styling */
+  .input-error {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 4px;
+    display: none;
+  }
+
+  /* Button style */
+  .submit-button {
+    background: linear-gradient(90deg, #2196F3, #21CBF3);
+    color: white;
+    font-weight: 700;
+    padding: 14px 28px;
+    font-size: 17px;
+    border: none;
+    border-radius: 8px;
+    transition: background-position 0.4s ease;
+    background-size: 200% 100%;
+    background-position: left;
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+    user-select: none;
+  }
+  .submit-button:hover {
+    background-position: right;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(33, 150, 243, 0.6);
+  }
+
+  /* Contact info styling */
+  .contact-info {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px 25px;
+    box-shadow: 0 6px 16px rgb(33 150 243 / 0.1);
+    color: #444;
+    font-weight: 600;
+  }
+  .contact-info p {
+    margin: 14px 0;
+    font-size: 15px;
+  }
+  .contact-info i {
+    margin-right: 10px;
+    font-size: 18px;
+    vertical-align: middle;
+  }
+  .underline-link {
+    color: #2196F3;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .underline-link:hover {
+    text-decoration: underline;
+    color: #0d7cd1;
+  }
+
+  /* Social icons */
+  .social-icons .social-icon {
+    font-size: 28px;
+    margin-right: 16px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+  .social-icons .social-icon:hover {
+    transform: scale(1.4);
+    filter: drop-shadow(0 0 6px #2196F3);
+    cursor: pointer;
+  }
+
+  /* Map fade-in */
+  .map-container {
+    opacity: 0;
+    animation: fadeInEase 1.5s forwards 0.5s;
+  }
+</style>
+
+<script>
+  // Basic real-time form validation feedback
+  const form = document.querySelector('.contact-form');
+  if(form) {
+    form.querySelectorAll('input, textarea').forEach(input => {
+      input.addEventListener('input', () => {
+        const errorSpan = input.nextElementSibling.nextElementSibling;
+        if(input.checkValidity()) {
+          input.style.borderColor = '#2ecc71';
+          if(errorSpan) errorSpan.style.display = 'none';
+        } else {
+          input.style.borderColor = '#e74c3c';
+          if(errorSpan) {
+            errorSpan.textContent = input.validationMessage;
+            errorSpan.style.display = 'block';
+          }
+        }
+      });
+    });
+  }
+</script>
+
+{% endblock %}
