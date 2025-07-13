@@ -1,0 +1,88 @@
+/* ABOUT PAGE STYLES */
+.about-container {
+  margin-top: 3rem;
+}
+
+.about-header h2 {
+  text-align: center;
+}
+
+.about-header p {
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+.about-img-section {
+  background-color: black;
+}
+
+.about-text-section {
+  background-color: black;
+  color: white;
+  padding: 20px;
+}
+
+.core-service-card {
+  background-color: black;
+  color: white;
+}
+
+
+.team-section {
+  background-color: black;
+  color: white;
+  margin-top: 3rem;
+}
+
+.team-section img {
+  width: 150px;
+  height: 150px;
+}
+
+.testimonial-section {
+  background-color: black;
+  color: white;
+  margin-top: 3rem;
+}
+
+.carousel-item {
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.1);
+}
+
+.partners-section {
+  background-color: black;
+  color: white;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+/* Partners Section - Mobile Responsive */
+.partners-section {
+  background-color: black;
+  color: white;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.partners-section img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  background-color: white;
+  padding: 6px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.partners-section img:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 576px) {
+  .partners-section .col-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}

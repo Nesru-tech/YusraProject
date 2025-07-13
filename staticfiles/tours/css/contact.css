@@ -1,0 +1,57 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff;
+}
+
+.contact-section {
+  color: #bfa033;
+  padding: 40px 20px;
+}
+
+.contact-title {
+  color: #bfa033;
+  font-size: 36px;
+  font-weight: bold;
+  font-family: 'Playfair Display', serif;
+}
+
+.contact-info i {
+  color: #bfa033;
+  margin-right: 8px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background-color: #fff;
+  color: #000;
+  border: 1.5px solid #bfa033;
+  font-size: 15px;
+}
+
+.contact-form label {
+  color: #bfa033;
+  font-weight: 600;
+}
+
+.submit-button {
+  background-color: #bfa033 !important;
+  color: #fff !important;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #fff !important;
+  color: #bfa033 !important;
+  border: 2px solid #bfa033;
+}
+
+.social-icons a {
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+.w3-card-4 {
+  background-color: #f9f9f9;
+  border: 1px solid #bfa033;
+}
