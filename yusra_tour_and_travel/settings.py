@@ -10,7 +10,13 @@ DEBUG = False
 
 
 # Specific ngrok host (recommended)
-ALLOWED_HOSTS = ['localhost','127.0.0.1', '178.128.163.246','yusratourandtravel.com']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    '178.128.163.246',
+    'yusratourandtravel.com',
+    'www.yusratourandtravel.com'
+]
 
 
 # Application definition
