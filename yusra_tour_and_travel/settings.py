@@ -8,6 +8,7 @@ SECRET_KEY = "django-insecure-7+&=q!i7g0*i0&#e)zetj7x+qop4+$^ekuj5qlyujl0al4n!4&
 
 DEBUG = False
 
+
 # Specific ngrok host (recommended)
 ALLOWED_HOSTS = ['127.0.0.1', '178.128.163.246','yusratourandtravel.com']
 
