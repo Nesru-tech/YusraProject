@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-7+&=q!i7g0*i0&#e)zetj7x+qop4+$^ekuj5qlyujl0al4n!4&"
 
-DEBUG = False
+DEBUG = True
 
 # Specific ngrok host (recommended)
 ALLOWED_HOSTS = [
