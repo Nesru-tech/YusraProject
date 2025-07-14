@@ -6,8 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-7+&=q!i7g0*i0&#e)zetj7x+qop4+$^ekuj5qlyujl0al4n!4&"
 
-DEBUG = True
-
+DEBUG = False
 
 # Specific ngrok host (recommended)
 ALLOWED_HOSTS = [
@@ -17,7 +16,6 @@ ALLOWED_HOSTS = [
     'yusratourandtravel.com',
     'www.yusratourandtravel.com'
 ]
-
 
 # Application definition
 INSTALLED_APPS = [
@@ -31,7 +29,6 @@ INSTALLED_APPS = [
     "widget_tweaks",
 ]
 CSRF_TRUSTED_ORIGINS = ['https://270d-196-188-255-165.ngrok-free.app']
-
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -89,6 +86,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
+
 # Internationalization
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
@@ -103,6 +101,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
 # Email Configuration (SMTP for Gmail)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -118,6 +117,8 @@ LOGIN_REDIRECT_URL = "/redirect/"
 
 # Default primary key type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Logging configuration
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
